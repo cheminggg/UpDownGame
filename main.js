@@ -9,10 +9,14 @@
 // foydalanuvchi oldin kiritgan raqamni yana birmarta kiritsa elon beradi shansdan olib tashlamaydi
 
 let computerNum = 0;
-const btn = document.getElementById('btn'); // html dan  tugmani chaqirib oldik
+let btn = document.getElementById('btn'); // html dan  tugmani chaqirib oldik
 const userInput = document.getElementById('user-input');
 const resultArea = document.getElementById('result-area');
 const resetButton = document.getElementById('reset-button');
+const chanceArea = document.getElementById('chance-area');
+
+let chances = 5; // qolgan shans
+let gameOver = false;
 
 btn.addEventListener('click', play);
 resetButton.addEventListener('click', reset);
@@ -27,6 +31,11 @@ function pickRandomNum() {
 
 function play() {
   const userValue = userInput.value; // userInput.value; user ni qiymatini olib keladi.
+
+  chances--; // play tugmasini bossa shans tushib boradi
+  chanceArea.textContent = `qolgan shans : ${chances} ta`;
+  console.log('chance', chances);
+
   if (userValue < computerNum) {
     // agar user qiymati kompyuter qiymatidan kichik bulsa (Up!!!) chiqadi.
     resultArea.textContent = 'Up!!!'; // div tagga natijani chiqarib beradi.
@@ -35,6 +44,14 @@ function play() {
     resultArea.textContent = 'Down!!!';
   } else {
     resultArea.textContent = 'Topdingiz!!!';
+  }
+
+  if (chances < 1) {
+    gameOver = true;
+  }
+
+  if (gameOver == true) {
+    btn.disabled = true;
   }
 }
 
