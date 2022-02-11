@@ -36,6 +36,7 @@ function play() {
   chanceArea.textContent = `qolgan shans : ${chances} ta`;
   console.log('chance', chances);
 
+  // agar buni eng pastga yozsak birinchi chance ni kamaytirib keyin tuxtadi shuning uchun teada yozish kerak
   if (userValue < 1 && userValue > 100) {
     alert('100 dan katta son kiritngiz');
   }
