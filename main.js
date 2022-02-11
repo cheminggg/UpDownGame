@@ -36,6 +36,10 @@ function play() {
   chanceArea.textContent = `qolgan shans : ${chances} ta`;
   console.log('chance', chances);
 
+  if (userValue < 1 && userValue > 100) {
+    alert('100 dan katta son kiritngiz');
+  }
+
   if (userValue < computerNum) {
     // agar user qiymati kompyuter qiymatidan kichik bulsa (Up!!!) chiqadi.
     resultArea.textContent = 'Up!!!'; // div tagga natijani chiqarib beradi.
@@ -44,6 +48,7 @@ function play() {
     resultArea.textContent = 'Down!!!';
   } else {
     resultArea.textContent = 'Topdingiz!!!';
+    return;
   }
 
   if (chances < 1) {
