@@ -9,66 +9,81 @@
 // foydalanuvchi oldin kiritgan raqamni yana birmarta kiritsa elon beradi shansdan olib tashlamaydi
 
 let computerNum = 0;
-let btn = document.getElementById('btn'); // html dan  tugmani chaqirib oldik
-const userInput = document.getElementById('user-input');
-const resultArea = document.getElementById('result-area');
-const resetButton = document.getElementById('reset-button');
-const chanceArea = document.getElementById('chance-area');
 
-let chances = 5; // qolgan shans
-let gameOver = false;
+let playButton = document.getElementById('play-button');
+let userInput = document.getElementById('user-input');
+let resultArea = document.getElementById('result-area');
+let resetButton = document.getElementById('reset-button');
 
-btn.addEventListener('click', play);
-resetButton.addEventListener('click', reset);
+let chances = 5;
+gameOver = false;
+let chanceArea = document.getElementById('chance-area');
 
+let history = [];
+
+playButton.addEventListener('click', play); // click event button
+resetButton.addEventListener('click', reset); // click event button
+userInput.addEventListener('focus', () => {
+  userInput.value = '';
+});
+
+// random numer qismi
 function pickRandomNum() {
-  // math.floor butun raqam chiqaradi
-  // Math.random() * 100; 100-gacha bulgan son orasidan random qiladi
-  // Math.floor(Math.random() * 100)+1 (oxridagi +1 raqam komp 0 dan hisoblagani uchun 99 gacha chiqadi 100 gacha bulgan sonni chiqarish uchun +1 quyildi)
   computerNum = Math.floor(Math.random() * 100) + 1;
   console.log(computerNum);
 }
 
+// play function
 function play() {
-  const userValue = userInput.value; // userInput.value; user ni qiymatini olib keladi.
+  let userValue = userInput.value;
 
-  chances--; // play tugmasini bossa shans tushib boradi
-  chanceArea.textContent = `qolgan shans : ${chances} ta`;
-  console.log('chance', chances);
-
-  // agar buni eng pastga yozsak birinchi chance ni kamaytirib keyin tuxtadi shuning uchun teada yozish kerak
-  if (userValue < 1 && userValue > 100) {
-    alert('100 dan katta son kiritngiz');
-  }
-
-  if (userValue < computerNum) {
-    // agar user qiymati kompyuter qiymatidan kichik bulsa (Up!!!) chiqadi.
-    resultArea.textContent = 'Up!!!'; // div tagga natijani chiqarib beradi.
-  } else if (userValue > computerNum) {
-    // agar user qiymati kompyuter qiymatidan katta bulsa (Down!!!) chiqadi.
-    resultArea.textContent = 'Down!!!';
-  } else {
-    resultArea.textContent = 'Topdingiz!!!';
+  if (userValue < 1 || userValue > 100) {
+    resultArea.textContent = '1 va 100 ni urtasidagi sonni kiriting';
     return;
   }
+
+  if (history.includes(userValue)) {
+    resultArea.textContent = 'uje kiritilgan raqam';
+    return;
+  }
+
+  chances--;
+  chanceArea.textContent = `Qolgan shans : ${chances}`;
+  console.log('chance', chances);
+
+  if (userValue < computerNum) {
+    resultArea.textContent = 'UP!!!';
+    // console.log('UP!!!');
+  } else if (userValue > computerNum) {
+    resultArea.textContent = 'DOWN!!!';
+    // console.log('DOWN!!!');
+  } else {
+    resultArea.textContent = 'Topdingiz!!!';
+    gameOver = true;
+    // console.log('Topdingiz');
+  }
+
+  history.push(userValue);
+  console.log(history);
 
   if (chances < 1) {
     gameOver = true;
   }
 
   if (gameOver == true) {
-    btn.disabled = true;
+    playButton.disabled = true;
   }
 }
 
 function reset() {
-  // reset function
-  // user input oynasi tozalanadi
-  userInput.value = ''; // input oynasi yangilanadi.
-  // yangi raqam beriladi. buning uchun tepadagi random funksiyasini chaqirsak buldi.
-  pickRandomNum();
+  // reset qilganda oy user oynani tozalash
+  // userInput.value = '';
 
-  resultArea.textContent = 'Natija bu yerdan chiqadi';
+  // random numerni yangilash
+  // pickRandomNum();
+
+  // resultArea.textContent = 'natija bu yerda chiqadi';
+  location.reload(true);
 }
 
 pickRandomNum();
