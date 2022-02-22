@@ -14,6 +14,7 @@ let playButton = document.getElementById('play-button');
 let userInput = document.getElementById('user-input');
 let resultArea = document.getElementById('result-area');
 let resetButton = document.getElementById('reset-button');
+let resultAreaImg = document.querySelector('.main-img');
 
 let chances = 5;
 gameOver = false;
@@ -52,12 +53,18 @@ function play() {
   console.log('chance', chances);
 
   if (userValue < computerNum) {
+    resultAreaImg.src =
+      'https://media0.giphy.com/media/3ov9jExd1Qbwecoqsg/200.gif';
     resultArea.textContent = 'UP!!!';
     // console.log('UP!!!');
   } else if (userValue > computerNum) {
+    resultAreaImg.src =
+      'https://media1.giphy.com/media/3sdvGVm7Tg3egvphQF/giphy.gif';
     resultArea.textContent = 'DOWN!!!';
     // console.log('DOWN!!!');
   } else {
+    resultAreaImg.src =
+      'https://media.tenor.com/images/0a81b89954678ebe228e15e35044f7a5/tenor.gif';
     resultArea.textContent = 'Topdingiz!!!';
     gameOver = true;
     // console.log('Topdingiz');
